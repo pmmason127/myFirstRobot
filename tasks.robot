@@ -13,6 +13,7 @@ Library             RPA.Archive
 Library             RPA.Dialogs
 Library             OperatingSystem
 Library             RPA.Robocorp.Vault
+# Library    RPA.Robocloud.Secrets
 
 
 *** Variables ***
@@ -20,8 +21,12 @@ ${MAX_ATTEMPTS}=    5
 
 
 *** Tasks ***
+Open browser
+    ${secret}=    Get Secret    credentials
+    Open Chrome Browser    ${secret}[RPA_URL]
+    # Open the robot order website
+
 Order robots from RobotSpareBin Industries Inc
-    Open the robot order website
     Download orders file
     ${orders}=    Get orders
 
@@ -40,8 +45,8 @@ Order robots from RobotSpareBin Industries Inc
 
 
 *** Keywords ***
-Open the robot order website
-    Open Available Browser    https://robotsparebinindustries.com/#/robot-order
+# Open the robot order website
+#    Open Available Browser    ${secret}[RPA_URL]
 
 Download orders file
     Download    https://robotsparebinindustries.com/orders.csv    overwrite=True
